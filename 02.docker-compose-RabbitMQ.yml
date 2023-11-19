@@ -1,0 +1,25 @@
+# Docker Compose for RabbitMQ
+# UI Management: http://localhost:15872
+# User: admin
+# Pass: admin
+# Port: 56820
+
+version: '3.1'
+ 
+services:
+ 
+  rabbitmq-java-logs-service:
+    image: rabbitmq:3.12.6-management-alpine
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    ports:
+      - "15872:15672"
+      - "56820:5672"
+    networks:
+      - common-network
+networks:
+    common-network:
+      external: true
+    

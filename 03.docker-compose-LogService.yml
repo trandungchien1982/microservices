@@ -1,0 +1,22 @@
+# Docker Compose for LogService
+# http://localhost:8700
+# Using RabbitMQ broker in 01.docker-compose-RabbitMQ.yml
+
+version: '3.1'
+ 
+services:
+ 
+  java-logs-service:
+    image: tdchien1982/spring:log-services-rabbitmq-1.0
+    restart: always
+    environment:
+      RABBITMQ_SERVER: rabbitmq-java-logs-service
+      RABBITMQ_PORT: 5672
+    ports:
+      - "8700:8700"
+    networks:
+      - common-network
+networks:
+    common-network:
+      external: true
+    

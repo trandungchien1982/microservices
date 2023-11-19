@@ -1,0 +1,34 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  all-services-db:
+    image: mysql:8.1.0
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 4306:3306
+      
+    volumes:
+      - ./init-dbs:/docker-entrypoint-initdb.d
+    networks:
+      - common-network
+
+      
+networks:
+  common-network:
+    external: true
+
+# The MySQL database
+# Server : all-services-db
+# User/Pass : root/root
+# Database : 
+#   01.order-service-db
+#   02.payment-service-db
+#   03.restaurant-service-db
+#   04.delivery-service-db
